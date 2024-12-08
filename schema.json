@@ -24,15 +24,44 @@
         },
         {
           "const": "ntfy"
+        },
+        {
+          "const": "console"
+        },
+        {
+          "const": "console_async"
         }
+      ]
+    },
+    "doctor_locators": {
+      "$anchor": "DoctorLocator",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "enabled"
       ]
     }
   },
   "properties": {
     "luxmedsniper": {
       "properties": {
-        "doctor_locator_id": {
-          "type": "string"
+        "doctor_locators": {
+          "type": "array",
+          "items": {
+            "$ref": "#DoctorLocator"
+          }
         },
         "lookup_time_days": {
           "type": "number"
@@ -53,7 +82,7 @@
         }
       },
       "required": [
-        "doctor_locator_id",
+        "doctor_locators",
         "lookup_time_days",
         "notification_provider"
       ],
@@ -62,12 +91,12 @@
     "misc": {
       "type": "object",
       "properties": {
-        "notifydb": {
+        "notifydb_template": {
           "type": "string"
         }
       },
       "required": [
-        "notifydb"
+        "notifydb_template"
       ]
     },
     "luxmed": {
@@ -86,17 +115,31 @@
     },
     "pushover": {
       "properties": {
-        "user_key": {},
-        "api_token": {},
-        "message_template": {},
-        "title": {}
+        "user_key": {
+          "type": "string"
+        },
+        "api_token": {
+          "type": "string"
+        },
+        "message_template": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
       }
     },
     "slack": {
       "properties": {
-        "channel": {},
-        "api_token": {},
-        "message_template": {}
+        "channel": {
+          "type": "string"
+        },
+        "api_token": {
+          "type": "string"
+        },
+        "message_template": {
+          "type": "string"
+        }
       }
     },
     "pushbullet": {
@@ -107,8 +150,26 @@
     },
     "ntfy": {
       "properties": {
-        "topic": {},
-        "message_template": {}
+        "topic": {
+          "type": "string"
+        },
+        "message_template": {
+          "type": "string"
+        }
+      }
+    },
+    "console": {
+      "properties": {
+        "message_template": {
+          "type": "string"
+        }
+      }
+    },
+    "console_async": {
+      "properties": {
+        "message_template": {
+          "type": "string"
+        }
       }
     }
   },

@@ -17,16 +17,16 @@ luxmedsniper:
   notification_provider: # console, console_async, slack, pushover, pushbullet, gi, telegram
     - telegram
 pushover:
-  user_key: # Your pushover.net user key
-  api_token:  # pushover.net App API Token
+  user_key: "" # Your pushover.net user key
+  api_token: ""  # pushover.net App API Token
   message_template: "{name} - {AppointmentDate} at {ClinicPublicName} - {DoctorName}"
   title: "New Lux Med visit available!" # Pushover message topic
 slack:
-  api_token: # Your slack application token
-  channel: # notification channel
+  api_token: "" # Your slack application token
+  channel: "" # notification channel
   message_template: "{name} - {AppointmentDate} at {ClinicPublicName} - {DoctorName}"
 pushbullet:
-  access_token: # Your pushbullet access token
+  access_token: "" # Your pushbullet access token
   message_template: "{name} - {AppointmentDate} at {ClinicPublicName} - {DoctorName}"
   title: "New Lux Med visit available!"
 telegram:

@@ -1,0 +1,5 @@
+luxmed-ids
+*.yaml
+*.db
+*.log
+.venv

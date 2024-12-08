@@ -28,7 +28,7 @@ pushover:
   message_template: "New visit! {AppointmentDate} at {ClinicPublicName} - {DoctorName}"
   title: "New Lux Med visit available!" # Pushover message topic
 misc:
-  notifydb: ./notifications-{email}.db # State file used to remember which notifications has been sent already
+  notifydb_template: ./notifications-{email}.db # State file used to remember which notifications has been sent already
 ```
 
 2) Run it
