@@ -7,7 +7,8 @@ How to use LuxmedSniper?
 --------------------
 First of all create virtualenv and install Python requirements from requirements.txt
 
-1) For each luxmed users create configuration file (yaml format) and save it for example as luxmed_username.yml:
+1) For each luxmed users create configuration file (yaml format) and save it for example as `luxmed_username.yml` inside `config` directory.
+Review `config/DEFAULT.yaml` which is complete example that presents the whole configuration structure.
 ```
 luxmed:
   email: EMAIL
@@ -28,7 +29,7 @@ pushover:
   message_template: "New visit! {AppointmentDate} at {ClinicPublicName} - {DoctorName}"
   title: "New Lux Med visit available!" # Pushover message topic
 misc:
-  notifydb: ./notifications-{email}.db # State file used to remember which notifications has been sent already
+  notifydb_template: ./notifications-{email}.db # State file used to remember which notifications has been sent already
 ```
 
 2) Run it

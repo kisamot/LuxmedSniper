@@ -1,9 +1,12 @@
-version: '3'
-
 services:
   luxmedsniper:
     build:
       context: .
       dockerfile: ./Dockerfile
+    volumes:
+      - ./config:/usr/src/app/config
+      - ./db:/usr/src/app/db
+      - ./log:/usr/src/app/log
+      - ./luxmed-ids:/usr/src/app/luxmed-ids
     container_name: luxmedsniper
     restart: always

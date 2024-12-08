@@ -1,0 +1,9 @@
+config/
+db/
+log/
+luxmed-ids/
+*.yaml
+*.db
+*.log
+.venv
+.gitignore
