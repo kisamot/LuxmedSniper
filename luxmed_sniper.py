@@ -10,6 +10,7 @@ import shelve
 import sys
 import time
 from fnmatch import fnmatch
+from jsonschema import validate
 from typing import Any, Callable, Coroutine
 
 import requests
@@ -58,6 +59,9 @@ class LuxMedSniper:
             with configuration_path.open(encoding="utf-8") as stream:
                 cf = yaml.load(stream, Loader=yaml.FullLoader)
                 self.config = merge(self.config, cf)
+        with open('schema.json', 'r') as file:
+            schema = json.load(file)
+            validate(instance=self.config, schema=schema)
 
     @staticmethod
     def _format_message(message_template: str, doctor_locator: dict[str, Any], appointment_data: dict[str, Any]) -> str:
@@ -144,18 +148,21 @@ class LuxMedSniper:
         response = self.session.post(
             url=LuxMedSniper.LUXMED_LOGIN_URL,
             json=json_data,
-            headers={"Content-Type": "application/json"},
+            headers={"Content-Type": "application/json", "Accept": "application/json"},
         )
         logger.debug("Login response: {}.\nLogin cookies: {}", response.text, response.cookies)
         if response.status_code != requests.codes["ok"]:
             raise LuxmedSniperError(f"Unexpected response {response.status_code}, cannot log in")
+        response_body = json.loads(response.text)
+        if response_body['succeded'] is not True or response_body['token'] is None:
+            raise LuxmedSniperError(f"Unexpected response body {json.dumps(response_body)}, cannot log in")
 
         logger.info("Successfully logged in!")
         self.session.cookies = response.cookies
         for k, v in self.session.cookies.items():
             self.session.headers.update({k: v})
 
-        token = json.loads(response.text)["token"]
+        token = response_body["token"]
         self.session.headers["authorization-token"] = f"Bearer {token}"
 
     @staticmethod
@@ -275,14 +282,14 @@ class LuxMedSniper:
     def get_cities(self) -> list[dict]:
         response = self.session.get(
             url=LuxMedSniper.DICTIONARY_CITIES_URL,
-            headers={"Content-Type": "application/json"},
+            headers={"Accept": "application/json"}
         )
         return response.json()
 
     def get_services(self) -> list[dict]:
         response = self.session.get(
             url=LuxMedSniper.DICTIONARY_SERVICES_URL,
-            headers={"Content-Type": "application/json"},
+            headers={"Accept": "application/json"},
         )
         return response.json()
 
@@ -294,7 +301,7 @@ class LuxMedSniper:
         response = self.session.get(
             url=LuxMedSniper.DICTIONARY_FACILITIES_AND_DOCTORS,
             params = params,
-            headers={"Content-Type": "application/json"}
+            headers={"Accept": "application/json"}
         )
         return response.json()
 
